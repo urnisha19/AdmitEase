@@ -1,9 +1,9 @@
 const graduateImages = [
-  "/src/assets/graduation 1.jpg",
-  "/src/assets/graduation 2.jpg",
-  "/src/assets/graduation 3.jpg",
-  "/src/assets/graduation 4.jpg",
-  "/src/assets/graduation 5.jpg",
+  "/src/assets/graduation1.jpg",
+  "/src/assets/graduation2.jpg",
+  "/src/assets/graduation3.jpg",
+  "/src/assets/graduation4.jpg",
+  "/src/assets/graduation5.jpg",
 ];
 
 const GraduateGallerySection = () => {
