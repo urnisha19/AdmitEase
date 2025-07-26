@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const AdmissionForm = ({ selectedCollege, onSuccess }) => {
   const [formData, setFormData] = useState({
