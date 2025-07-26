@@ -1,0 +1,161 @@
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const AdmissionForm = ({ selectedCollege, onSuccess }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    subject: "",
+    email: "",
+    phone: "",
+    address: "",
+    dob: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const navigate = useNavigate();
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^[+\d]?(?:[\d-\s]{7,15})$/;
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+    if (!emailPattern.test(formData.email)) newErrors.email = "Invalid email";
+    if (!phonePattern.test(formData.phone)) newErrors.phone = "Invalid phone";
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.dob) newErrors.dob = "Date of Birth is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedCollege) {
+      alert("Please select a college before submitting");
+      return;
+    }
+
+    if (!validate()) return;
+
+    setLoading(true);
+    try {
+      const submissionData = {
+        ...formData,
+        college: selectedCollege.name,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3000/api/admissions",
+        submissionData
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        const storedAdmissions =
+          JSON.parse(localStorage.getItem("admissions")) || [];
+        localStorage.setItem(
+          "admissions",
+          JSON.stringify([
+            ...storedAdmissions,
+            { ...formData, college: selectedCollege.name },
+          ])
+        );
+
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          subject: "",
+          email: "",
+          phone: "",
+          address: "",
+          dob: "",
+        });
+        setErrors({});
+        onSuccess();
+        setTimeout(() => navigate("/my-college"), 1500);
+      } else {
+        alert("Submission failed. Try again.");
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="bg-white shadow-xl rounded-xl p-6"
+    >
+      <h3 className="text-xl font-semibold mb-4 text-center">
+        Fill Admission Form for:{" "}
+        <span className="text-blue-600">{selectedCollege.name}</span>
+      </h3>
+
+      {submitted && (
+        <div className="col-span-2 bg-green-100 text-green-800 p-4 rounded mb-4 text-center">
+          🎉 Admission submitted successfully!
+        </div>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        noValidate
+      >
+        {[
+          { label: "Candidate Name", name: "name", type: "text" },
+          { label: "Subject", name: "subject", type: "text" },
+          { label: "Candidate Email", name: "email", type: "email" },
+          { label: "Candidate Phone", name: "phone", type: "tel" },
+          { label: "Address", name: "address", type: "text" },
+          { label: "Date of Birth", name: "dob", type: "date" },
+        ].map(({ label, name, type }) => (
+          <div key={name} className="form-control">
+            <label className="label">
+              <span className="label-text">{label}</span>
+            </label>
+            <input
+              type={type}
+              placeholder={label}
+              value={formData[name]}
+              onChange={(e) =>
+                setFormData({ ...formData, [name]: e.target.value })
+              }
+              className={`input input-bordered w-full ${
+                errors[name] ? "input-error" : ""
+              }`}
+            />
+            {errors[name] && (
+              <label className="label">
+                <span className="label-text-alt text-error">
+                  {errors[name]}
+                </span>
+              </label>
+            )}
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className={`col-span-2 btn btn-primary text-white text-lg mt-4 ${
+            loading ? "btn-disabled opacity-70" : ""
+          }`}
+        >
+          {loading ? "Submitting..." : "Submit Admission"}
+        </button>
+      </form>
+    </motion.div>
+  );
+};
+
+export default AdmissionForm;
