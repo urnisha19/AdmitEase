@@ -1,9 +1,15 @@
+import graduation1 from "/src/assets/graduation1.jpg";
+import graduation2 from "/src/assets/graduation2.jpg";
+import graduation3 from "/src/assets/graduation3.jpg";
+import graduation4 from "/src/assets/graduation4.jpg";
+import graduation5 from "/src/assets/graduation5.jpg";
+
 const graduateImages = [
-  "/src/assets/graduation1.jpg",
-  "/src/assets/graduation2.jpg",
-  "/src/assets/graduation3.jpg",
-  "/src/assets/graduation4.jpg",
-  "/src/assets/graduation5.jpg",
+  graduation1,
+  graduation2,
+  graduation3,
+  graduation4,
+  graduation5,
 ];
 
 const GraduateGallerySection = () => {
