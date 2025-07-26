@@ -31,7 +31,14 @@ const Router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/colleges", element: <Colleges /> },
-      { path: "/admission", element: <Admission /> },
+      {
+        path: "/admission",
+        element: (
+          <PrivateRoute>
+            <Admission />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "/my-college",
         element: (
