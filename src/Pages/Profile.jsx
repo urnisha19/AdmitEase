@@ -36,7 +36,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/users/profile/${user.email}`,
+          `https://admitease-server.onrender.com/api/users/profile/${user.email}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const Profile = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:3000/api/users/profile/${user.email}`,
+        `https://admitease-server.onrender.com/api/users/profile/${user.email}`,
         { name, photo },
         {
           headers: {

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         photo: user.photoURL || "",
       };
 
-      const res = await fetch("http://localhost:3000/api/users", {
+      const res = await fetch("https://admitease-server.onrender.com/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
     for (let i = 0; i < retries; i++) {
       const res = await fetch(
-        `http://localhost:3000/api/users/${encodedEmail}`,
+        `https://admitease-server.onrender.com/api/users/${encodedEmail}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

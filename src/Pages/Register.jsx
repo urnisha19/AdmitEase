@@ -41,7 +41,7 @@ const Register = () => {
 
       // 4. Sync to backend (send name/email)
       const { data: createdUser } = await axios.post(
-        "http://localhost:3000/api/users",
+        "https://admitease-server.onrender.com/api/users",
         {
           name,
         },

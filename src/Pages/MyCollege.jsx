@@ -44,7 +44,7 @@ const MyCollege = () => {
 
   const fetchAdmissions = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admissions");
+      const res = await axios.get("https://admitease-server.onrender.com/api/admissions");
       const allAdmissions = res.data || [];
 
       // Filter by logged-in user's email
@@ -61,7 +61,7 @@ const MyCollege = () => {
   const fetchReviews = async (collegeName) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/reviews?collegeName=${collegeName}`
+        `https://admitease-server.onrender.com/api/reviews?collegeName=${collegeName}`
       );
       setReviews(res.data || []);
     } catch (error) {
@@ -96,7 +96,7 @@ const MyCollege = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/api/reviews", newReview);
+      await axios.post("https://admitease-server.onrender.com/api/reviews", newReview);
       toast.success("Review submitted!");
       setReviewText("");
       setRating(5);

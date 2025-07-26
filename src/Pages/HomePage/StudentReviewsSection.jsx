@@ -9,7 +9,7 @@ const StudentReviewsSection = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/reviews");
+        const res = await axios.get("https://admitease-server.onrender.com/api/reviews");
         setReviews(res.data);
       } catch (err) {
         setError("Failed to load reviews.");

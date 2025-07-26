@@ -21,7 +21,7 @@ const Login = () => {
 
       try {
         await axios.post(
-          "http://localhost:3000/api/users",
+          "https://admitease-server.onrender.com/api/users",
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -29,7 +29,7 @@ const Login = () => {
         );
 
         await axios.get(
-          `http://localhost:3000/api/users/${auth.currentUser.email}`,
+          `https://admitease-server.onrender.com/api/users/${auth.currentUser.email}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

@@ -50,7 +50,7 @@ const AdmissionForm = ({ selectedCollege, onSuccess }) => {
       };
 
       const response = await axios.post(
-        "http://localhost:3000/api/admissions",
+        "https://admitease-server.onrender.com/api/admissions",
         submissionData
       );
 
